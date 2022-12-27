@@ -41,12 +41,17 @@ export default {
     },
     methods: {
         async deleteBlog(id){
+            console.log(id)
             if(confirm('Are you sure?')){
                 await axios.delete(`api/posts/${id}`)
                 .then((response) => {
+                    console.log(response)
                     if(response.data.status == 'success'){
                     this.status = "success";
                     this.message = "Post has been deleted!";
+                    this.data = this.data.filter((item) => {
+                        return item.id !== id
+                    });
                     setTimeout(() => {
                         this.status = "";
                         this.message = "";

@@ -18,7 +18,8 @@ class PostController extends Controller
         $posts =  Post::latest()->get();
         $modifiedPosts = [];
         foreach ($posts as $post) {
-            $modifiedPosts[] = [ 
+            $modifiedPosts[] = [
+                'id' => $post->id,
                 'thumbnail' => config('app.url').'/storage/'.$post->image,
                 'title' => $post->title,
                 'post' => $post->post,
