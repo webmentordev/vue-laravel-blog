@@ -3,10 +3,11 @@
         <h1 class="text-3xl text-main">Home page</h1>
         <div class="flex items-center">
             <input
-                type="search"
+                type="text"
                 v-model="search"
                 placeholder="Search blog..."
                 required
+                @change="searchBlog"
                 class="w-full mt-2 bg-white rounded border border-gray-300 focus:border-main focus:ring-4 focus:ring-main-half text-base mr-2 outline-none text-gray-700 py-1 px-3 mb-2 leading-8 transition-colors duration-200 ease-in-out"
             />
             <button
@@ -56,7 +57,7 @@ export default {
     methods: {
         async searchBlog() {
             await axios
-                .get(`api/posts/${this.search}`)
+                .get(`/api/posts/search/${this.search}`)
                 .then((response) => response.data)
                 .then((data) => (this.data = data));
             if (this.search == "") {
@@ -65,9 +66,9 @@ export default {
         },
         async fetchData() {
             await axios
-                .get("api/posts")
+                .get("/api/posts")
                 .then((response) => response.data)
-                .then((data) => (this.data = data));
+                .then(data => this.data = data);
         },
     },
 };

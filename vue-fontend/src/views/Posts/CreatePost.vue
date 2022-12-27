@@ -36,7 +36,6 @@ export default {
   methods: {
     onImageChange(e){
       this.image = e.target.files[0];
-      console.log(this.image)
     },
     async createPost(){
       await axios.post("api/posts" , {

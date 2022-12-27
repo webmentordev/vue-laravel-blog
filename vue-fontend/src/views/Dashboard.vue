@@ -13,7 +13,7 @@
             <td class="text-start text-sm py-2">{{ post.title }}</td>
             <td class="text-start text-sm">{{ post.slug }}</td>
             <td class="text-end px-3">{{ post.date }}</td>
-            <td class="text-end" @click="deleteBlog(post.id)"><span class="cursor-pointer bg-red-600 py-2 px-3 text-white">Delete</span></td>
+            <td class="text-end" @click="deleteBlog(post.id)"><span class="cursor-pointer bg-red-600 py-2 px-3 text-white rounded-md">Delete</span></td>
         </tr>
     </table>
   </div>
@@ -41,11 +41,9 @@ export default {
     },
     methods: {
         async deleteBlog(id){
-            console.log(id)
             if(confirm('Are you sure?')){
                 await axios.delete(`api/posts/${id}`)
                 .then((response) => {
-                    console.log(response)
                     if(response.data.status == 'success'){
                     this.status = "success";
                     this.message = "Post has been deleted!";

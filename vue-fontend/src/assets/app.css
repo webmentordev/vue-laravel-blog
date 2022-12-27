@@ -519,12 +519,28 @@ video {
   position: fixed;
 }
 
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
 .bottom-3{
   bottom: 0.75rem;
 }
 
 .right-3{
   right: 0.75rem;
+}
+
+.top-3{
+  top: 0.75rem;
+}
+
+.left-3{
+  left: 0.75rem;
 }
 
 .m-auto{
@@ -613,12 +629,12 @@ video {
   max-width: 98%;
 }
 
-.max-w-lg{
-  max-width: 32rem;
-}
-
 .max-w-3xl{
   max-width: 48rem;
+}
+
+.max-w-lg{
+  max-width: 32rem;
 }
 
 @keyframes spin{
@@ -791,6 +807,11 @@ video {
 
 .text-lg{
   font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-xl{
+  font-size: 1.25rem;
   line-height: 1.75rem;
 }
 
