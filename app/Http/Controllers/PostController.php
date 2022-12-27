@@ -15,7 +15,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        $posts =  Post::latest()->get();
+        $modifiedPosts = [];
+        foreach ($posts as $post) {
+            $modifiedPosts[] = [ 
+                'thumbnail' => config('app.url').'/storage/'.$post->image,
+                'title' => $post->title,
+                'post' => $post->post,
+                'slug' => $post->slug,
+                'description' => $post->description,
+                'date' => $post->created_at->diffForHumans(),
+            ];
+        }
+        return $modifiedPosts;
     }
 
     /**
@@ -27,11 +39,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts,title|max:255',
+            'title' => 'required|max:255',
             'post' => 'required',
-            'image' => 'required|image|mimes:png,jpg,jpeg'
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+            'description' => 'required',
         ]);
         if ($validator->fails()) {
+            dd([$validator, $request->all]);
             return [
                 "status" => "failed",
                 "message" => "There is something wrong with the form!"
@@ -40,6 +54,7 @@ class PostController extends Controller
         Post::create([
             'title' => $request->title,
             'post' => $request->post,
+            'description' => $request->description,
             'image' => $request->image->store('images', 'public_disk'),
             'slug' => str_replace(' ', '-', strtolower($request->title))
         ]);
@@ -62,17 +77,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -92,6 +96,25 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::where('id', $id)->delete();
+        return response()->json([
+            "status" => 'success',
+            "message" => 'Post has been deleted!'
+        ], 200);
+    }
+
+    public function search($title){
+        $result = Post::where('title', 'LIKE', '%'.$title.'%')->get();
+        $modifiedPosts = [];
+        foreach ($result as $post) {
+            $modifiedPosts[] = [ 
+                'thumbnail' => config('app.url').'/storage/'.$post->image,
+                'title' => $post->title,
+                'post' => $post->post,
+                'slug' => $post->slug,
+                'description' => $post->description,
+            ];
+        }
+        return $modifiedPosts;
     }
 }

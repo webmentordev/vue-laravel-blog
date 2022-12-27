@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('post');
             $table->text('slug');
             $table->string('image');
+            $table->text('description');
             $table->boolean('featured')->default(true);
             $table->timestamps();
         });
