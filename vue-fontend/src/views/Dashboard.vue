@@ -4,16 +4,18 @@
   <div v-if="data.length">
     <table class="w-full">
         <tr>
-            <th class="text-start">Title</th>
+            <th class="text-start px-2">Title</th>
             <th class="text-start">Slug</th>
             <th class="text-end px-3">Created</th>
             <th class="text-end">Delete</th>
+            <th class="text-end px-3">Update</th>
         </tr>
         <tr v-for="post in data" :key="post.id" class="text-sm">
-            <td class="text-start text-sm py-2">{{ post.title }}</td>
+            <td class="text-start px-2 text-sm py-2">{{ post.title }}</td>
             <td class="text-start text-sm">{{ post.slug }}</td>
             <td class="text-end px-3">{{ post.date }}</td>
             <td class="text-end" @click="deleteBlog(post.id)"><span class="cursor-pointer bg-red-600 py-2 px-3 text-white rounded-md">Delete</span></td>
+            <td class="text-end px-3"><Update /></td>
         </tr>
     </table>
   </div>
@@ -22,6 +24,7 @@
 <script>
 import axios from 'axios'
 import Alert from '../components/Alert.vue'
+import Update from './Posts/Update.vue'
 export default {
     name: "DashboardView",
     data(){
@@ -32,7 +35,8 @@ export default {
         }
     },
     components: {
-        Alert
+        Alert,
+        Update
     },
     async mounted() {
         await axios.get('api/posts')
