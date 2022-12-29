@@ -15,14 +15,13 @@ export default {
   name: "SinglePost",
   data(){
     return {
-      post: {}
+      post: {},
     }
   },
-  async mounted(){
-      await axios.get(`/api/posts/${this.$route.params.slug}`)
+  mounted(){
+      axios.get(`/api/posts/${this.$route.params.slug}`)
       .then(response => response.data)
       .then(data => this.post = data)
-      
   }
 }
 </script>

@@ -38,15 +38,15 @@ export default {
         Alert,
         Update
     },
-    async mounted() {
-        await axios.get('api/posts')
+    mounted() {
+        axios.get('api/posts')
         .then(response => response.data)
         .then(data => this.data = data)
     },
     methods: {
-        async deleteBlog(id){
+        deleteBlog(id){
             if(confirm('Are you sure?')){
-                await axios.delete(`api/posts/${id}`)
+                axios.delete(`api/posts/${id}`)
                 .then((response) => {
                     if(response.data.status == 'success'){
                     this.status = "success";

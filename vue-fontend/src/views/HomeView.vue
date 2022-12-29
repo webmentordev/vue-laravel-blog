@@ -51,22 +51,20 @@ export default {
             search: "",
         };
     },
-    async mounted() {
+    mounted() {
         this.fetchData();
     },
     methods: {
-        async searchBlog() {
-            await axios
-                .get(`/api/posts/search/${this.search}`)
+        searchBlog() {
+            axios.get(`/api/posts/search/${this.search}`)
                 .then((response) => response.data)
                 .then((data) => (this.data = data));
             if (this.search == "") {
                 this.fetchData();
             }
         },
-        async fetchData() {
-            await axios
-                .get("/api/posts")
+        fetchData() {
+            axios.get("/api/posts")
                 .then((response) => response.data)
                 .then(data => this.data = data);
         },
