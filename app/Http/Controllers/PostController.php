@@ -74,15 +74,23 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->get();
-        return response()->json([
-            'id' => $post[0]->id,
-            'thumbnail' => config('app.url').'/storage/'.$post[0]->image,
-            'title' => $post[0]->title,
-            'post' => $post[0]->post,
-            'slug' => $post[0]->slug,
-            'description' => $post[0]->description,
-            'date' => $post[0]->created_at->diffForHumans()
-        ]);
+        if(count($post) > 0 ){
+            return response()->json([
+                'id' => $post[0]->id,
+                'thumbnail' => config('app.url').'/storage/'.$post[0]->image,
+                'title' => $post[0]->title,
+                'post' => $post[0]->post,
+                'slug' => $post[0]->slug,
+                'description' => $post[0]->description,
+                'date' => $post[0]->created_at->diffForHumans(),
+                'status' => 'success'
+            ]);
+        }else{
+            return response()->json([
+                "status" => 'failed',
+                "message" => 'No Data Found'
+            ]);
+        }
     }
 
     /**

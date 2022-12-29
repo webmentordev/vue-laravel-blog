@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import NotFound from '../components/NotFound.vue'
 import CreatePost from '../views/Posts/CreatePost.vue'
 import Post from '../views/Posts/Post.vue'
 import Dashboard from '../views/Dashboard.vue'
@@ -29,6 +30,11 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: "NotFound",
+    component: NotFound
   }
 ]
 
