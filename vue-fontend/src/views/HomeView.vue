@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="text-center" v-else>
-            <p><i class="fab fa-react animate-spin"></i> Loading blogs...</p>
+            <p>{{ message }}</p>
         </div>
     </div>
 </template>
@@ -49,24 +49,29 @@ export default {
         return {
             data: [],
             search: "",
+            message: ""
         };
     },
     mounted() {
+        this.message = "Loading data..."
         this.fetchData();
     },
     methods: {
         searchBlog() {
             axios.get(`/api/posts/search/${this.search}`)
                 .then((response) => response.data)
-                .then((data) => (this.data = data));
+                .then((data) => (this.data = data))
+                .catch(error => this.message = error.message);
+                
             if (this.search == "") {
                 this.fetchData();
             }
         },
         fetchData() {
-            axios.get("/api/posts")
+            axios.get('/api/posts')
                 .then((response) => response.data)
-                .then(data => this.data = data);
+                .then(data => this.data = data)
+                .catch(error => this.message = error.message);
         },
     },
 };
