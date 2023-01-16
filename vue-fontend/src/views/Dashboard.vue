@@ -15,7 +15,7 @@
             <td class="text-start text-sm">{{ post.slug }}</td>
             <td class="text-end px-3">{{ post.date }}</td>
             <td class="text-end" @click="deleteBlog(post.id)"><span class="cursor-pointer bg-red-600 py-2 px-3 text-white rounded-md">Delete</span></td>
-            <td class="text-end px-3"><Update /></td>
+            <td class="text-end px-3 cursor-pointer"><Update :data="post" /></td>
         </tr>
     </table>
   </div>

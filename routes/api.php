@@ -9,4 +9,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/posts/search/{title}', [PostController::class, 'search']);
+Route::post('/posts/update/{id}', [PostController::class, 'updateData']);
 Route::resource('posts', PostController::class);

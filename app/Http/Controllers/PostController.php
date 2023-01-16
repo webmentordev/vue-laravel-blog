@@ -102,7 +102,37 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'post' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                "status" => "failed",
+                "message" => "There is something wrong with the form!"
+            ];
+        }
+        $postArray = [
+            "title" => $request->title,
+            "post" => $request->post,
+            "description" => $request->description,
+        ];
+        $post = Post::find($id);
+        $post->update(array_filter($postArray));
+        
+        if($request->hasFile('image')){
+            $post->update([
+                'image' => $request->image->store('images', 'public_disk')
+            ]);
+        }
+        $post->save();
+        return response()->json([
+            "status" => 'success',
+            "message" => 'Post has been updated!'
+        ]);
     }
 
     /**
@@ -133,5 +163,40 @@ class PostController extends Controller
             ];
         }
         return $modifiedPosts;
+    }
+
+    public function updateData(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'post' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                "status" => "failed",
+                "message" => "There is something wrong with the form!"
+            ];
+        }
+        $postArray = [
+            "title" => $request->title,
+            "post" => $request->post,
+            "description" => $request->description,
+        ];
+        $post = Post::find($id);
+        $post->update(array_filter($postArray));
+        
+        if($request->hasFile('image')){
+            $post->update([
+                'image' => $request->image->store('images', 'public_disk')
+            ]);
+        }
+        $post->save();
+        return response()->json([
+            "status" => 'success',
+            "message" => 'Post has been updated!'
+        ]);
     }
 }
